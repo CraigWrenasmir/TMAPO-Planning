@@ -1,0 +1,1635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMAPO Planning | Their Most August Public Organ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0e13;
+  --surface: #13161d;
+  --surface-raised: #1a1e28;
+  --border: #252a36;
+  --border-glow: #3a4055;
+  --text: #c8ccd8;
+  --text-dim: #6b7084;
+  --text-bright: #e8eaf0;
+  --accent: #7b8cde;
+  --train: #6b9bd2;
+  --bushwalk: #5a9e6f;
+  --root: #8b7ec8;
+  --paperback: #d4a054;
+  --boxer: #c75d5d;
+  --vaporwave: #d06bc4;
+  --tmapo: #e0c87a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(123, 140, 222, 0.3);
+  color: var(--text-bright);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(12, 14, 19, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+nav .brand {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--tmapo);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+nav .links {
+  display: flex;
+  gap: 0.2rem;
+  overflow-x: auto;
+}
+
+nav .links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+nav .links a:hover {
+  color: var(--text-bright);
+  background: var(--surface-raised);
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 7rem 2rem 3rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hero .kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 2.8rem;
+  color: var(--text-bright);
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--tmapo);
+}
+
+.hero .subtitle {
+  font-size: 1.05rem;
+  color: var(--text);
+  max-width: 640px;
+  line-height: 1.8;
+}
+
+.hero .subtitle strong {
+  color: var(--text-bright);
+  font-weight: 400;
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header h2 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: var(--text-bright);
+  margin-bottom: 0.4rem;
+}
+
+.section-header p {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+/* ── CONSTELLATION ── */
+#constellation {
+  max-width: 100%;
+  padding: 2rem;
+}
+
+.constellation-wrap {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  min-height: 500px;
+}
+
+.constellation-wrap canvas {
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+.constellation-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.legend-item:hover { color: var(--text-bright); }
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-line {
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.constellation-info {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  background: rgba(12, 14, 19, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  font-size: 0.8rem;
+  color: var(--text);
+  display: none;
+  max-width: 500px;
+}
+
+.constellation-info h4 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.constellation-info .tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* ── VIGNETTE CARDS ── */
+.vignettes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1rem;
+}
+
+.vignette-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.vignette-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.vignette-card:hover {
+  border-color: var(--border-glow);
+  transform: translateY(-2px);
+}
+
+.vignette-card:hover::before { opacity: 1; }
+
+.vignette-card[data-v="train"]::before { background: var(--train); }
+.vignette-card[data-v="bushwalk"]::before { background: var(--bushwalk); }
+.vignette-card[data-v="root"]::before { background: var(--root); }
+.vignette-card[data-v="paperback"]::before { background: var(--paperback); }
+.vignette-card[data-v="boxer"]::before { background: var(--boxer); }
+.vignette-card[data-v="vaporwave"]::before { background: var(--vaporwave); }
+
+.vignette-card .v-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.vignette-card h3 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+
+.vignette-card .v-signature {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.vignette-card .v-body {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  display: none;
+}
+
+.vignette-card.expanded .v-body { display: block; }
+
+.v-body h4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 1.2rem 0 0.5rem;
+}
+
+.v-body h4:first-child { margin-top: 0; }
+
+.v-body ul {
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.v-body li {
+  margin-bottom: 0.3rem;
+}
+
+.v-body .v-ascii {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  background: rgba(0,0,0,0.3);
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  margin: 0.8rem 0;
+  color: var(--text-dim);
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.v-expand {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.6rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── TMAPO RECURRENCE ── */
+.tmapo-track {
+  position: relative;
+  padding: 1rem 0;
+}
+
+.tmapo-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--tmapo), transparent);
+  opacity: 0.3;
+}
+
+.tmapo-node {
+  position: relative;
+  padding: 1.2rem 1.2rem 1.2rem 3.5rem;
+  margin-bottom: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+.tmapo-node:hover {
+  border-color: rgba(224, 200, 122, 0.3);
+}
+
+.tmapo-node::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--tmapo);
+  opacity: 0.6;
+  box-shadow: 0 0 8px rgba(224, 200, 122, 0.3);
+}
+
+.tmapo-node .tn-vignette {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.tmapo-node h4 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--tmapo);
+  margin-bottom: 0.3rem;
+}
+
+.tmapo-node p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── ONTOLOGY ── */
+.ontology-diagram {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.onto-layer {
+  border: 1px solid var(--border);
+  border-bottom: none;
+  padding: 1.5rem;
+  position: relative;
+  background: var(--surface);
+}
+
+.onto-layer:first-child {
+  border-radius: 10px 10px 0 0;
+}
+
+.onto-layer:last-child {
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 0 10px 10px;
+}
+
+.onto-layer .layer-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.onto-layer h4 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--text-bright);
+  margin-bottom: 0.4rem;
+}
+
+.onto-layer p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.onto-layer .onto-arrow {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* ── THREADS ── */
+.threads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.thread-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem;
+}
+
+.thread-card h4 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-bright);
+  margin-bottom: 0.6rem;
+}
+
+.thread-card .thread-chain {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+.thread-card p {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── INSPIRATIONS ── */
+.inspirations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.insp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem;
+}
+
+.insp-card .insp-author {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.3rem;
+}
+
+.insp-card h4 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+
+.insp-card p {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.insp-card .insp-applies {
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* ── APPROACH ── */
+.approach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.approach-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.approach-card h4 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--text-bright);
+  margin-bottom: 0.6rem;
+}
+
+.approach-card p, .approach-card li {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.approach-card ul {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.approach-card li { margin-bottom: 0.3rem; }
+
+.approach-card blockquote {
+  border-left: 2px solid var(--tmapo);
+  padding: 0.5rem 0.8rem;
+  margin: 0.8rem 0;
+  font-family: 'Alegreya', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* ── CONNECTION MATRIX ── */
+.matrix-wrap {
+  overflow-x: auto;
+}
+
+.matrix-table {
+  border-collapse: collapse;
+  font-size: 0.72rem;
+  width: 100%;
+  min-width: 600px;
+}
+
+.matrix-table th,
+.matrix-table td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.5rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.matrix-table th {
+  background: var(--surface-raised);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.matrix-table td {
+  background: var(--surface);
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  text-align: left;
+  min-width: 100px;
+}
+
+.matrix-table td.strong-link {
+  background: rgba(123, 140, 222, 0.08);
+  color: var(--text);
+}
+
+.matrix-table td.self {
+  background: var(--surface-raised);
+  text-align: center;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 3rem 2rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+footer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .vignettes-grid { grid-template-columns: 1fr; }
+  nav .links a { font-size: 0.65rem; padding: 0.3rem 0.5rem; }
+  .constellation-wrap { aspect-ratio: 4/3; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">TMAPO</span>
+  <div class="links">
+    <a href="#constellation">Constellation</a>
+    <a href="#vignettes">Vignettes</a>
+    <a href="#tmapo-recurrence">Recurrence</a>
+    <a href="#ontology">Ontology</a>
+    <a href="#threads">Threads</a>
+    <a href="#matrix">Matrix</a>
+    <a href="#inspirations">Inspirations</a>
+    <a href="#approach">Approach</a>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<header class="hero">
+  <p class="kicker">Novel Planning &mdash; Working Document</p>
+  <h1><em>Their Most August Public Organ</em></h1>
+  <p class="subtitle">
+    A slim novel of six interconnected daydreams. A mind on a train, assembling itself through drift, fiction, memory, and sensation &mdash; until it arrives, quietly, in the presence of another person. <strong>No hierarchy of reality. Just continuity of sensation.</strong>
+  </p>
+</header>
+
+<!-- ═══════ CONSTELLATION ═══════ -->
+<section id="constellation">
+  <div class="section-header">
+    <h2>Constellation</h2>
+    <p>Hover over nodes to see connections. Each vignette is a node of equal weight; consciousness drifts between them like tuning a radio.</p>
+  </div>
+  <div class="constellation-wrap">
+    <canvas id="constellation-canvas"></canvas>
+    <div class="constellation-info" id="constellation-info"></div>
+  </div>
+  <div class="constellation-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--train)"></div> Train</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--bushwalk)"></div> Bushwalk</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--root)"></div> Root</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--paperback)"></div> Paperback</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--boxer)"></div> Boxer</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--vaporwave)"></div> Vaporwave</div>
+    <div class="legend-item"><div class="legend-line" style="background:var(--tmapo)"></div> TMAPO recurrence</div>
+    <div class="legend-item"><div class="legend-line" style="background:var(--accent); opacity:0.5"></div> Strong connection</div>
+    <div class="legend-item"><div class="legend-line" style="background:var(--text-dim); opacity:0.3; border-top: 1px dashed var(--text-dim); height:0"></div> Soft thread</div>
+  </div>
+</section>
+
+<!-- ═══════ VIGNETTES ═══════ -->
+<section id="vignettes">
+  <div class="section-header">
+    <h2>The Six Vignettes</h2>
+    <p>Click to expand. Each carries its own pressure, colour, tempo &mdash; but they are all part of the same atmosphere.</p>
+  </div>
+  <div class="vignettes-grid">
+
+    <!-- TRAIN -->
+    <div class="vignette-card" data-v="train" onclick="this.classList.toggle('expanded')">
+      <div class="v-num" style="color:var(--train)">Vignette 01</div>
+      <h3>The Train</h3>
+      <p class="v-signature">attention &middot; reflection &middot; motion</p>
+      <div class="v-body">
+        <h4>Premise</h4>
+        <p>The narrator rides the train from Newcastle down to the Central Coast, looking out the window at the landscape. A soft spine for the book. He is on his way to meet his friend Andrew for a bushwalk. The book begins here and ultimately returns here.</p>
+        <h4>Trajectory</h4>
+        <p>Looking &rarr; drifting &rarr; arriving. The mind loosens; vignettes slip in as continuations of perception under different conditions. The trajectory ends when he steps off, sees Andrew, and the book closes.</p>
+        <h4>Key Elements</h4>
+        <ul>
+          <li><strong>The window as membrane:</strong> blends inside and outside, reflections ghost the narrator's face over the landscape, the world doubled, slightly misaligned</li>
+          <li><strong>Repetition with variation:</strong> poles, trees, fences passing &mdash; observational, then hypnotic, then abstract</li>
+          <li><strong>The body on the train:</strong> slight sway, seat fabric, temperature, other passengers &mdash; anchors the reader</li>
+          <li><strong>Psychogeography:</strong> the landscape as a thinking space, not just scenery</li>
+        </ul>
+        <h4>Ending</h4>
+        <p>Understated. He steps off. He sees Andrew before Andrew sees him. Maybe Andrew is adjusting something, tying a shoe. The landscape present but not grand. Power comes from everything the reader has carried into this moment.</p>
+        <div class="v-ascii">
+sunlight / wire / paddock / wire / paddock / tree / paddock / wire
+
+------------------------------ hill --------------------------------
+      grassgrassgrassgrassgrassgrassgrassgrassgrassgrass
+  tree          fence      dam flash      sheep        tree
+grassgrassgrassgrassgrassgrassgrassgrassgrassgrassgrassgrassgrass
+
+the window keeps taking the field
+before the field can finish saying itself</div>
+      </div>
+      <p class="v-expand">[click to expand]</p>
+    </div>
+
+    <!-- BUSHWALK -->
+    <div class="vignette-card" data-v="bushwalk" onclick="this.classList.toggle('expanded')">
+      <div class="v-num" style="color:var(--bushwalk)">Vignette 02</div>
+      <h3>The Bushwalk</h3>
+      <p class="v-signature">breath &middot; thought &middot; landscape resistance</p>
+      <div class="v-body">
+        <h4>Premise</h4>
+        <p>A memory of a previous bushwalk with friend Andrew. The narrator anticipates the coming walk and recalls a past instance. They pushed through thick bush, climbed hills, sat breathing heavily at lookouts, got slugs on them. A real walk, philosophically charged.</p>
+        <h4>Trajectory</h4>
+        <p>Effort &rarr; expansion &rarr; quiet recognition. Philosophy under exertion. Ideas fail slightly against the landscape. Thought interrupted by breath, by climbing, by noticing light on leaves.</p>
+        <h4>Key Themes</h4>
+        <ul>
+          <li>The loss of moral certainty &mdash; distance from WWII-era absolutes, the collapse of clear good/evil</li>
+          <li>Nietzsche's death of God extended further &mdash; no meaning, no narrative, bleak ambiguity wrapped in technology</li>
+          <li>What it means to be human when the role of being human is unclear</li>
+          <li>The landscape's complete indifference to these questions &mdash; the bush doesn't care about narrative collapse, it just grows</li>
+        </ul>
+        <h4>Philosophy Touchpoints</h4>
+        <ul>
+          <li>Byung-Chul Han &mdash; <em>The End of Narrative</em>, <em>Non-Things</em></li>
+          <li>Theodor Adorno &mdash; lectures, critical theory</li>
+        </ul>
+        <h4>Compositional Note</h4>
+        <p>Let the philosophy be <em>porous</em>. Let it leak into the scrape of bark, the rhythm of footsteps, the heaviness of breath. The reader shouldn't feel like they've learned something &mdash; they should feel like they've been inside a thinking body in a landscape.</p>
+      </div>
+      <p class="v-expand">[click to expand]</p>
+    </div>
+
+    <!-- ROOT -->
+    <div class="vignette-card" data-v="root" onclick="this.classList.toggle('expanded')">
+      <div class="v-num" style="color:var(--root)">Vignette 03</div>
+      <h3>Root</h3>
+      <p class="v-signature">storage &middot; signal &middot; rewriting</p>
+      <div class="v-body">
+        <h4>Premise</h4>
+        <p>A younger version of the narrator and his female partner travel rural Australia installing mesh network repeater nodes &mdash; small hard-drive repositories in trees, old motels, pastoral locations. These hold data for after civilisation collapses: birdsong, music, maps, photographs of leaves, river systems, literature, history, repair guides.</p>
+        <h4>Trajectory</h4>
+        <p>Control &rarr; care &rarr; surrender &rarr; revelation. They install, catalogue, archive. Then they return to a familiar tree emitting an unfamiliar signal. The tree has infiltrated the data &mdash; biology and technology merging, the tree authoring its own content, corrupting and upgrading the archive. Nature is writing its own message.</p>
+        <h4>Key Elements</h4>
+        <ul>
+          <li>Motorbike rides, old ute with hardware, blankets under stars, decrepit motels</li>
+          <li>The couple's intimacy &mdash; shared proximity, bodies in a fading world holding each other while trying to hold everything else</li>
+          <li>The tree's message should never be fully legible &mdash; patterned, rhythmic, partially recognisable, never translatable</li>
+          <li>The revelation arrives as quiet recognition, not dramatic reveal</li>
+        </ul>
+        <h4>Meta-structural Role</h4>
+        <p>Root may be the deep centre of the book. The ASCII art intrusions in the novel itself can be understood as evidence of the tree writing into the text. <strong>This book could be one of the mesh network text files, already touched by the tree's process.</strong> That's the nested ontology at work.</p>
+        <div class="v-ascii">
+their_most_august_public_organ.txt
+────────────────────────────────────
+  [node: lat -32.89 / lon 151.78]
+  [last modified: unknown]
+  [author: ████████ / quercus]
+
+  &gt; the birdsong files have changed
+  &gt; the maps fold differently now
+  &gt; something is writing that is
+  &gt; not us</div>
+      </div>
+      <p class="v-expand">[click to expand]</p>
+    </div>
+
+    <!-- PAPERBACK -->
+    <div class="vignette-card" data-v="paperback" onclick="this.classList.toggle('expanded')">
+      <div class="v-num" style="color:var(--paperback)">Vignette 04</div>
+      <h3>Paperback</h3>
+      <p class="v-signature">absorption &middot; summer &middot; letters</p>
+      <div class="v-body">
+        <h4>Premise</h4>
+        <p>A younger version of the narrator, a slacker hanging around Newcastle in summer. Couchsurfing between ex-girlfriends' places, reading cheap secondhand Australian paperbacks in parks, going to the beach, attending rooftop parties in balmy evenings. He maintains a correspondence with the Boxer via letters.</p>
+        <h4>Trajectory</h4>
+        <p>No strong arc. Time feels loose, meaning accumulates quietly. Scenes begin mid-moment, drift, dissolve. A life lived lightly while thinking heavily. The quiet accumulation of a self through what is read and felt.</p>
+        <h4>Key Elements</h4>
+        <ul>
+          <li>The paperbacks: not real titles, but imagined versions of Australian books. Fragments bleed into how he sees the world, into his letters, into his identity</li>
+          <li>Letters to the Boxer: ideas about history, preserving the past, slightly different angle from bushwalk philosophy</li>
+          <li>Letters from the Boxer: guidance about training, discipline. The slacker begins some loose boxing training</li>
+          <li>Boundaries blur between what happened, what was read, and what was imagined</li>
+          <li>Sensual atmosphere: sun on skin, balmy evenings, ephemeral romance</li>
+        </ul>
+        <h4>Structural Role</h4>
+        <p>Shows the mechanism of identity formation most clearly: read, drift, absorb, re-express. The paperbacks are seed texts that dissolve and reappear. He occasionally misremembers a book &mdash; details bent, tones shifted &mdash; showing the process of being rewritten by what you consume. A human version of Root's mesh network.</p>
+      </div>
+      <p class="v-expand">[click to expand]</p>
+    </div>
+
+    <!-- BOXER -->
+    <div class="vignette-card" data-v="boxer" onclick="this.classList.toggle('expanded')">
+      <div class="v-num" style="color:var(--boxer)">Vignette 05</div>
+      <h3>The Boxer</h3>
+      <p class="v-signature">impact &middot; repetition &middot; endurance</p>
+      <div class="v-body">
+        <h4>Premise</h4>
+        <p>A social outsider travelling through regional Australia, fighting in unofficial backroom pub fights for cash. He travels with a woman &mdash; a courtesan/prostitute he met and asked to travel with him. Stoic, quiet, unemotional. Based on a character study Craig wrote for a short story competition.</p>
+        <h4>Trajectory</h4>
+        <p>Endurance without resolution. Not heroic, not symbolic in an obvious way. What's left when the old structures of meaning have dissolved &mdash; a man who still chooses discipline in a world that doesn't reward it with meaning.</p>
+        <h4>Key Elements</h4>
+        <ul>
+          <li>Training: weight of hands, smell of pub floors, breathing, time stretching before a hit</li>
+          <li>The courtesan: shared proximity without resolution, they exist side by side but don't become a neat relationship</li>
+          <li>Reflects war, battle, moral compass &mdash; a degraded echo of war's moral clarity. Fights without ideology, cash without purpose</li>
+          <li>Letters from the Paperback slacker: connects the intellectual and the embodied</li>
+        </ul>
+        <h4>Compositional Note</h4>
+        <p>Keep interiority minimal but not empty. Observations, physical sensations, small contained thoughts. Let meaning emerge from what he notices, not what he explains. He interrupts the book's drift &mdash; the reader feels: "I can't just float here, I have to feel this."</p>
+      </div>
+      <p class="v-expand">[click to expand]</p>
+    </div>
+
+    <!-- VAPORWAVE -->
+    <div class="vignette-card" data-v="vaporwave" onclick="this.classList.toggle('expanded')">
+      <div class="v-num" style="color:var(--vaporwave)">Vignette 06</div>
+      <h3>Vaporwave Bushranger</h3>
+      <p class="v-signature">image &middot; simulation &middot; aesthetic overflow</p>
+      <div class="v-body">
+        <h4>Premise</h4>
+        <p>A bushranger wearing a jetpack. A woman in a holographic, reflective fabric skirt. They are in a vaporwave food court. Part video game, part art installation. Cyberpunk, solarpunk. The most surreal vignette &mdash; and yet, ontologically, just another daydream.</p>
+        <h4>Trajectory</h4>
+        <p>Appearance &rarr; saturation &rarr; quiet dissolution. It arrives vividly, holds, then fades like a screen dimming. No strong narrative arc needed. Possibly a character that escaped one of the paperback novels, expanding beyond its boundaries.</p>
+        <h4>Key Elements</h4>
+        <ul>
+          <li>Dialogue feels slightly too smooth, too composed &mdash; slightly off</li>
+          <li>Movement feels game-like: gliding, looping, repeating</li>
+          <li>Time may not behave properly</li>
+          <li>The bushranger: Australian myth from the past, now wearing a jetpack in a synthetic future. History rendered as aesthetic object</li>
+          <li>The woman: a presence, a surface that shifts &mdash; person and interface at once</li>
+        </ul>
+        <h4>Structural Role</h4>
+        <p>Stretches the reality spectrum to its furthest edge. The dream acknowledging itself as dream. If Root shows the tree writing into data, this shows a system that has gone further &mdash; generating something entirely new, aesthetic, synthetic, alive. Without this vignette, everything stays within "recognisable drift." With it, the reader realises the book drifts <em>beyond</em> recognisable realities.</p>
+      </div>
+      <p class="v-expand">[click to expand]</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ TMAPO RECURRENCE ═══════ -->
+<section id="tmapo-recurrence">
+  <div class="section-header">
+    <h2>Recurrence of <em>Their Most August Public Organ</em></h2>
+    <p>Like Brautigan's <em>Trout Fishing in America</em> &mdash; the title circulates through the system as data, artefact, memory, aesthetic object. Each appearance slightly "off." Never identical. Always becoming.</p>
+  </div>
+  <div class="tmapo-track">
+    <div class="tmapo-line"></div>
+
+    <div class="tmapo-node">
+      <div class="tn-vignette" style="color:var(--paperback)">Paperback</div>
+      <h4>A cheap, sun-warped paperback</h4>
+      <p>The title on the cover of a secondhand book. Font slightly off. Blurb doesn't quite match the contents. Maybe he never finishes it, but a line lingers. A cultural artefact. Casual. Half-held.</p>
+    </div>
+
+    <div class="tmapo-node">
+      <div class="tn-vignette" style="color:var(--root)">Root</div>
+      <h4>A text file on the mesh network</h4>
+      <p><code>their_most_august_public_organ.txt</code> &mdash; partially corrupted, interspersed with strange symbols, subtly rewritten by the tree. No longer clearly "a book." Something evolving. The novel itself may be this file.</p>
+    </div>
+
+    <div class="tmapo-node">
+      <div class="tn-vignette" style="color:var(--boxer)">Boxer</div>
+      <h4>Referenced in a letter</h4>
+      <p>The slacker mentions it casually: "I've been reading this thing&hellip;" The boxer doesn't respond to the title &mdash; he responds to a feeling from it. The phrase passed between people, slightly abstracted.</p>
+    </div>
+
+    <div class="tmapo-node">
+      <div class="tn-vignette" style="color:var(--train)">Train</div>
+      <h4>A disembodied echo</h4>
+      <p>Reflected somewhere &mdash; a discarded book, graffiti, an unprompted thought. Unclear whether he's remembering it, imagining it, or if it's just appearing. Almost disembodied.</p>
+    </div>
+
+    <div class="tmapo-node">
+      <div class="tn-vignette" style="color:var(--bushwalk)">Bushwalk</div>
+      <h4>A philosophical slip</h4>
+      <p>Surfaces in conversation, imperfectly. One of them misquotes it. Or laughs at how strange it sounds. Or tries to interpret it and gives up. Philosophically slippery.</p>
+    </div>
+
+    <div class="tmapo-node">
+      <div class="tn-vignette" style="color:var(--vaporwave)">Vaporwave</div>
+      <h4>Pure aesthetic object</h4>
+      <p>Signage in the food court. A looping audio fragment. Stylised typography. Detached from origin. Glowing. The phrase fully unmoored, pure surface.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ NESTED ONTOLOGY ═══════ -->
+<section id="ontology">
+  <div class="section-header">
+    <h2>Nested Ontology</h2>
+    <p>No hierarchy of reality. Each layer could be the centre. The oscillation between layers <em>is</em> the experience of the novel.</p>
+  </div>
+  <div class="ontology-diagram">
+    <div class="onto-layer" style="border-left: 3px solid var(--vaporwave);">
+      <div class="layer-label">Layer 6 &mdash; Fully Synthetic</div>
+      <h4>Vaporwave Bushranger</h4>
+      <p>Image fully unmoored. The system generating something entirely new. A character possibly escaped from a paperback, now inhabiting a rendered environment. The dream acknowledging itself as dream.</p>
+      <span class="onto-arrow">&darr;</span>
+    </div>
+    <div class="onto-layer" style="border-left: 3px solid var(--root);">
+      <div class="layer-label">Layer 5 &mdash; System / Mutation</div>
+      <h4>Root</h4>
+      <p>Technology preserving reality, then nature rewriting that preservation. The book itself may be a text file on this network, already touched by the tree. ASCII intrusions in the novel = evidence of this process.</p>
+      <span class="onto-arrow">&darr;</span>
+    </div>
+    <div class="onto-layer" style="border-left: 3px solid var(--paperback);">
+      <div class="layer-label">Layer 4 &mdash; Absorbed Fiction</div>
+      <h4>Paperback</h4>
+      <p>Identity formed through borrowed fictions. Books dissolve into the reader, who re-expresses them in letters. Reality and fiction blur. The self as a remix of what has been consumed.</p>
+      <span class="onto-arrow">&darr;</span>
+    </div>
+    <div class="onto-layer" style="border-left: 3px solid var(--boxer);">
+      <div class="layer-label">Layer 3 &mdash; Embodied</div>
+      <h4>The Boxer</h4>
+      <p>The body insisting on reality. Impact, repetition, endurance. A degraded echo of war without ideology. Interrupts the drift. The reader has to feel this, not just float.</p>
+      <span class="onto-arrow">&darr;</span>
+    </div>
+    <div class="onto-layer" style="border-left: 3px solid var(--bushwalk);">
+      <div class="layer-label">Layer 2 &mdash; Reflection</div>
+      <h4>The Bushwalk</h4>
+      <p>Philosophy under exertion. Two bodies thinking together in landscape. Ideas fail against terrain. Moral ambiguity confronted by nature's indifference. A memory within an anticipation.</p>
+      <span class="onto-arrow">&darr;</span>
+    </div>
+    <div class="onto-layer" style="border-left: 3px solid var(--train);">
+      <div class="layer-label">Layer 1 &mdash; Perception</div>
+      <h4>The Train</h4>
+      <p>Attention in motion. The starting surface. Looking, drifting. But not ontologically prior &mdash; just the first frequency tuned. Any layer could be the spine. The reader quietly thinks: "maybe this is the real layer" &mdash; then: "no, this is" &mdash; then: "maybe none of them are."</p>
+    </div>
+  </div>
+  <div style="margin-top: 1.5rem; padding: 1.2rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px;">
+    <p style="font-size: 0.82rem; color: var(--text); line-height: 1.7;">
+      <strong style="color: var(--tmapo)">The key principle:</strong> These layers are not stacked from "most real" to "least real." They are <em>flat</em>. Any vignette could be the ontological centre. The train is not more real than the vaporwave food court. The bushwalk is not more real than Root. The book refuses a hierarchy of reality. Three or four vignettes can pass between each other without returning to the train. The oscillation between layers &mdash; that strange state where the reader quietly wonders which is "true" &mdash; <em>is the experience of the novel</em>.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════ THREADS ═══════ -->
+<section id="threads">
+  <div class="section-header">
+    <h2>Soft Threads</h2>
+    <p>Not plot connections. Transfer points. Residues. The last thing one scene touches becomes the doorway into the next.</p>
+  </div>
+  <div class="threads-grid">
+
+    <div class="thread-card">
+      <h4>Breath</h4>
+      <div class="thread-chain">boxer training &rarr; bushwalk climb &rarr; quiet moment on train</div>
+      <p>The same physical rhythm appears across vignettes. Breath as the one thing that persists across all ontological layers. Never stated. Just present.</p>
+    </div>
+
+    <div class="thread-card">
+      <h4>Surfaces</h4>
+      <div class="thread-chain">train window &rarr; paperback page &rarr; motel wall &rarr; holographic skirt</div>
+      <p>Things looked at, looked through, reflected in. Each surface is a membrane between self and world.</p>
+    </div>
+
+    <div class="thread-card">
+      <h4>Signals</h4>
+      <div class="thread-chain">letters &rarr; mesh nodes &rarr; drifting thoughts &rarr; ASCII forms</div>
+      <p>Information transmitted across distance. Human, technological, biological. All forms of signal interference.</p>
+    </div>
+
+    <div class="thread-card">
+      <h4>Bodies Side by Side</h4>
+      <div class="thread-chain">boxer &amp; courtesan &rarr; narrator &amp; Andrew &rarr; slacker &amp; lovers &rarr; couple in Root</div>
+      <p>Two people sharing space without fully resolving their proximity. Intimate but never over-defined. Tender in a way the book can hold without naming.</p>
+    </div>
+
+    <div class="thread-card">
+      <h4>Landscape Indifference</h4>
+      <div class="thread-chain">bush on the walk &rarr; paddocks from train &rarr; trees absorbing data &rarr; pastoral motels</div>
+      <p>The natural world doesn't care about human questions. It just grows, scratches, persists. That contrast is quietly profound.</p>
+    </div>
+
+    <div class="thread-card">
+      <h4>War &amp; Moral Absence</h4>
+      <div class="thread-chain">bushwalk philosophy &rarr; boxer's degraded echo &rarr; slacker's letters &rarr; civilisation collapse in Root</div>
+      <p>The lost certainty of WWII-era absolutes. Distance from clear good/evil. What remains when narrative authority dissolves.</p>
+    </div>
+
+    <div class="thread-card">
+      <h4>Drift Modality</h4>
+      <div class="thread-chain">train: perception drifts &rarr; walk: thought drifts &rarr; Root: data drifts &rarr; paperback: identity drifts &rarr; vaporwave: image drifts</div>
+      <p>Same phenomenon across different substrates. The unifying logic of the entire book. Not connection &mdash; resonance.</p>
+    </div>
+
+    <div class="thread-card">
+      <h4>Preservation &amp; Mutation</h4>
+      <div class="thread-chain">mesh archives &rarr; tree corruption &rarr; misremembered paperbacks &rarr; letters as partial truth</div>
+      <p>Every attempt to hold something stable results in transformation. Memory, data, fiction &mdash; all rewritten by the system that carries them.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ CONNECTION MATRIX ═══════ -->
+<section id="matrix">
+  <div class="section-header">
+    <h2>Connection Matrix</h2>
+    <p>How each vignette hands something to each other. Not logical consistency &mdash; daydream connective tissue.</p>
+  </div>
+  <div class="matrix-wrap">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Train</th>
+          <th>Bushwalk</th>
+          <th>Root</th>
+          <th>Paperback</th>
+          <th>Boxer</th>
+          <th>Vaporwave</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Train</th>
+          <td class="self">&mdash;</td>
+          <td class="strong-link">Anticipation &harr; memory. The walk exists inside the train before it happens. Breath on the hill &harr; stillness in the carriage.</td>
+          <td>Landscape sliding past = signals passing through. Motion generates both.</td>
+          <td>Window-gazing dissolves into reading. Attention loosens into absorption.</td>
+          <td>Stillness of the carriage body &harr; stillness after training. Two kinds of waiting.</td>
+          <td>The window's doubled reflection &rarr; holographic surfaces. Glass as portal.</td>
+        </tr>
+        <tr>
+          <th>Bushwalk</th>
+          <td class="strong-link">Memory recalled in transit. Arrival point for the whole book.</td>
+          <td class="self">&mdash;</td>
+          <td>Walking through landscape &harr; couple walking through landscape. Same terrain, different mission.</td>
+          <td>Philosophy discussed on walk &harr; ideas in letters. Different angle, same territory.</td>
+          <td class="strong-link">War's lost narrative (abstract) &harr; war's degraded echo (embodied). Body vs philosophy.</td>
+          <td>The bush's indifference &harr; the food court's synthetic indifference. Nature and simulation, equally uncaring.</td>
+        </tr>
+        <tr>
+          <th>Root</th>
+          <td>Signal moving through space. Train as transmission vehicle.</td>
+          <td>Humans in landscape, thinking. Care for the world.</td>
+          <td class="self">&mdash;</td>
+          <td class="strong-link">Letters as low-tech mesh network. Human signal distribution. Preservation impulse in both.</td>
+          <td>Regional territory overlap. Both moving through pastoral Australia.</td>
+          <td class="strong-link">Tree-writing evolves into full aesthetic generation. Corrupted data &rarr; synthetic world.</td>
+        </tr>
+        <tr>
+          <th>Paperback</th>
+          <td>Observational drift &harr; reading drift. Same looseness, different medium.</td>
+          <td>Same philosophical territory from a different angle, refracted through books.</td>
+          <td class="strong-link">Letters = human mesh network. Ideas about preserving the past feed Root's mission.</td>
+          <td class="self">&mdash;</td>
+          <td class="strong-link">Direct correspondence. Letters. Ideas &harr; action. Intellect &harr; body. Hub of connection.</td>
+          <td class="strong-link">A half-read page expands into a fully realised surreal scene. A character escapes a book.</td>
+        </tr>
+        <tr>
+          <th>Boxer</th>
+          <td>Two kinds of being in a body in motion. Disciplined vs. passive movement.</td>
+          <td class="strong-link">Embodied answer to what the walk can't resolve in words.</td>
+          <td>Travelling through same pastoral territory. Regional overlap.</td>
+          <td class="strong-link">Letters. Intellectual exchange. He receives ideas; he returns physical truth.</td>
+          <td class="self">&mdash;</td>
+          <td>The bushranger as historical fighter echo. Violence across ontological registers.</td>
+        </tr>
+        <tr>
+          <th>Vaporwave</th>
+          <td>Window membrane &rarr; holographic membrane. Looking through surfaces.</td>
+          <td>History flattened, rendered as aesthetic. The end of narrative fully realised.</td>
+          <td class="strong-link">The tree-writing system's furthest evolution. Data becoming autonomous image.</td>
+          <td class="strong-link">A fictional character escaped from the paperback world, now fully unmoored.</td>
+          <td>The bushranger: myth of violence reskinned. Aesthetic combat.</td>
+          <td class="self">&mdash;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════ INSPIRATIONS ═══════ -->
+<section id="inspirations">
+  <div class="section-header">
+    <h2>Literary Constellation</h2>
+    <p>Not references. Carriers of continuity. You're not saying "this part is like Sebald" &mdash; you're saying: this part <em>walks</em> like Sebald would walk.</p>
+  </div>
+  <div class="inspirations-grid">
+
+    <div class="insp-card">
+      <div class="insp-author">Patrick Keiller</div>
+      <h4>The View from the Train</h4>
+      <p>Psychogeography and train travel. The landscape as intellectual and perceptual territory. Movement as a way of thinking.</p>
+      <p class="insp-applies">Applies to: Train vignette, overall approach to landscape-as-thought</p>
+    </div>
+
+    <div class="insp-card">
+      <div class="insp-author">Thomas Bernhard</div>
+      <h4>Dense paragraph form</h4>
+      <p>Single block of text per page. No neat chapter spacing, no lines of dialogue broken out. The page as a pressure system. But broken by ASCII visualisations rather than remaining pure monolith.</p>
+      <p class="insp-applies">Applies to: Page form, typographic approach</p>
+    </div>
+
+    <div class="insp-card">
+      <div class="insp-author">Samuel Beckett</div>
+      <h4>Slim precision</h4>
+      <p>A lovely, slim hardcover where 70% of the page is text, 30% is room to think. Spacious. Refined. Intentional. "This will not waste your time, but it will ask something of you." Holding a stone rather than a brick.</p>
+      <p class="insp-applies">Applies to: Physical form, restraint, economy of language</p>
+    </div>
+
+    <div class="insp-card">
+      <div class="insp-author">Richard Brautigan</div>
+      <h4>Trout Fishing in America</h4>
+      <p>A phrase recurring across contexts, carrying slightly different meanings each time. The title as a living object inside the book, circulating through systems: books, files, letters, memory, image.</p>
+      <p class="insp-applies">Applies to: TMAPO title recurrence across all vignettes</p>
+    </div>
+
+    <div class="insp-card">
+      <div class="insp-author">W.G. Sebald</div>
+      <h4>Walking quality</h4>
+      <p>The book walks. Not describes walking &mdash; it moves at the pace of thought in motion. Photographs, documents, memory and fiction blurred. The past leaking into the present.</p>
+      <p class="insp-applies">Applies to: Overall pacing, bushwalk, train, tonal register</p>
+    </div>
+
+    <div class="insp-card">
+      <div class="insp-author">Byung-Chul Han</div>
+      <h4>The End of Narrative / Non-Things</h4>
+      <p>Philosophical framework for the bushwalk conversations. The collapse of narrative, the dematerialisation of the world, technology's displacement of lived experience.</p>
+      <p class="insp-applies">Applies to: Bushwalk philosophy, thematic underpinning</p>
+    </div>
+
+    <div class="insp-card">
+      <div class="insp-author">Theodor Adorno</div>
+      <h4>Lectures</h4>
+      <p>Critical theory as situated thought. Philosophy that knows its own conditions. The impossibility of culture after catastrophe.</p>
+      <p class="insp-applies">Applies to: Bushwalk themes, moral compass questions</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ APPROACH ═══════ -->
+<section id="approach">
+  <div class="section-header">
+    <h2>Writing Approach</h2>
+    <p>The compositional method. Not rules &mdash; instincts to hold while writing.</p>
+  </div>
+  <div class="approach-grid">
+
+    <div class="approach-card">
+      <h4>The Bigger Narrative</h4>
+      <p>Not a storyline. Not a thesis. A condition of reality:</p>
+      <blockquote>Meaning, memory, and perception are always being rewritten by forces beyond us &mdash; and we are part of that rewriting.</blockquote>
+      <p>An intellectual biography of the narrator, assembled through drift, fiction, memory, and sensation. A mind composed of versions of itself. Identity as a mesh network of selves.</p>
+    </div>
+
+    <div class="approach-card">
+      <h4>Transitions</h4>
+      <p>Don't think: "Where am I going next?" Think:</p>
+      <blockquote>What is the last thing this scene touches?</blockquote>
+      <p>A surface. A sound. A thought. A rhythm. Let that touch be the doorway. The book moves like a hand brushing across different materials. Not cuts &mdash; drift. Not chapters &mdash; handover. One vignette doesn't end; it hands a residue to the next.</p>
+    </div>
+
+    <div class="approach-card">
+      <h4>ASCII Intrusions</h4>
+      <p>These should feel like <strong>pressure peaks</strong> &mdash; moments where language can't quite hold itself and spills into form. Not decoration. Not illustration.</p>
+      <ul>
+        <li>Where does the sentence begin to fracture? That's where the diagram appears</li>
+        <li>The landscape turns into text</li>
+        <li>The network becomes visible</li>
+        <li>The daydream briefly crystallises before dissolving</li>
+        <li>Some should feel like they're emerging mid-sentence, as if the tree briefly takes the pen</li>
+      </ul>
+    </div>
+
+    <div class="approach-card">
+      <h4>The Page as Climate</h4>
+      <ul>
+        <li><strong>Dense block:</strong> pressure, thought, interiority</li>
+        <li><strong>Empty margins:</strong> air, time, possibility</li>
+        <li><strong>ASCII intrusions:</strong> the world glitching into form, or memory trying to stabilise</li>
+      </ul>
+      <p>Each page is a small climate system, not a container of information. The book generates states, not delivers meaning.</p>
+    </div>
+
+    <div class="approach-card">
+      <h4>Structure Decision</h4>
+      <p><strong>One continuous flow</strong> vs. <strong>light, minimal sections</strong>. If sections, they should feel like they emerged naturally:</p>
+      <ul>
+        <li>Slightly different spacing</li>
+        <li>A small symbol</li>
+        <li>A tonal shift suggesting a new phase</li>
+        <li>Quiet thresholds, not chapters</li>
+      </ul>
+      <p>All vignettes start to resolve at the same time toward the end &mdash; not resolution of plot, but resolution of pattern. Different instruments revealing they've been playing the same piece.</p>
+    </div>
+
+    <div class="approach-card">
+      <h4>Working Method</h4>
+      <p><strong>Recommended: write straight through.</strong> This book wants to be discovered as a sequence of transitions. The first-pass drift can't be faked.</p>
+      <p>For each vignette, hold:</p>
+      <ul>
+        <li>A starting condition</li>
+        <li>A direction of drift</li>
+        <li>A point of quiet convergence</li>
+      </ul>
+      <blockquote>When you sit down to write, don't think "I need to complete this." Think: "I'm entering this field&hellip; and I'll leave when the pressure changes."</blockquote>
+    </div>
+
+    <div class="approach-card">
+      <h4>The Ending</h4>
+      <p>You see Andrew before he sees you. Maybe he's adjusting something, tying a shoe, looking away. The landscape present but not grand. Understated. Slightly off-centre. Human.</p>
+      <p>The entire book has been the long inhale. This moment is the quiet exhale. Not resolution of ontology &mdash; a return to presence. The question of what's real no longer matters. What feels real is recognition, presence, that small human moment.</p>
+      <blockquote>All of this&hellip; was the mind preparing itself to arrive.</blockquote>
+    </div>
+
+    <div class="approach-card">
+      <h4>Reader Experience</h4>
+      <p>What should someone feel opening any random page?</p>
+      <ul>
+        <li><strong>Intimacy:</strong> connection to what they're reading, seeing themselves or someone they know</li>
+        <li><strong>Cosy resonance</strong> with landscape, interior rooms, places</li>
+        <li><strong>Sublimity:</strong> beautiful in a way that feels different to any other book</li>
+        <li>Not clinical philosophy, not maximalist linguistics</li>
+        <li>Something comfortably resonant yet somehow sublime</li>
+      </ul>
+      <p>A book that sits on a bedside table, picked up at odd hours, read in fragments. It doesn't demand attention &mdash; it invites drift.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>TMAPO Planning &middot; Their Most August Public Organ &middot; Working Document</p>
+</footer>
+
+<script>
+// ═══════ CONSTELLATION CANVAS ═══════
+
+const VIGNETTES = [
+  {
+    id: 'train',
+    label: 'The Train',
+    color: '#6b9bd2',
+    signature: 'attention / reflection / motion',
+    desc: 'Narrator on train from Newcastle to Central Coast. Looking out the window. The soft spine. Begins and ends the book. Perception in motion.',
+    tmapo: 'A disembodied echo — reflected somewhere, a discarded book, graffiti, an unprompted thought.'
+  },
+  {
+    id: 'bushwalk',
+    label: 'The Bushwalk',
+    color: '#5a9e6f',
+    signature: 'breath / thought / landscape',
+    desc: 'Memory of a walk with Andrew. Philosophy under exertion. Moral ambiguity, Adorno, Byung-Chul Han. Bodies thinking together in landscape.',
+    tmapo: 'Surfaces in conversation, imperfectly. Misquoted. Laughed at. Philosophically slippery.'
+  },
+  {
+    id: 'root',
+    label: 'Root',
+    color: '#8b7ec8',
+    signature: 'storage / signal / rewriting',
+    desc: 'Couple installing mesh network data repositories across rural Australia. Trees infiltrate the data, writing their own content. Biology and technology merging.',
+    tmapo: 'A text file: their_most_august_public_organ.txt — partially corrupted, rewritten by the tree. The novel itself may be this file.'
+  },
+  {
+    id: 'paperback',
+    label: 'Paperback',
+    color: '#d4a054',
+    signature: 'absorption / summer / letters',
+    desc: 'Younger narrator, a slacker in Newcastle summer. Reading cheap paperbacks, couchsurfing, rooftop parties. Writing letters to the Boxer. Identity through drift.',
+    tmapo: 'A cheap, sun-warped paperback with the title on the cover. Font slightly off. Cultural artefact. Half-held.'
+  },
+  {
+    id: 'boxer',
+    label: 'The Boxer',
+    color: '#c75d5d',
+    signature: 'impact / repetition / endurance',
+    desc: 'Social outsider travelling regional Australia. Backroom pub fights for cash. Travels with a courtesan. Stoic, embodied. A degraded echo of war\'s moral clarity.',
+    tmapo: 'Referenced in a letter from the slacker. The phrase passed between people, slightly abstracted.'
+  },
+  {
+    id: 'vaporwave',
+    label: 'Vaporwave Bushranger',
+    color: '#d06bc4',
+    signature: 'image / simulation / overflow',
+    desc: 'Bushranger with jetpack, woman in holographic skirt, vaporwave food court. The most surreal vignette. Image fully unmoored. Dream acknowledging itself.',
+    tmapo: 'Signage in the food court. A looping audio fragment. Stylised typography. Pure aesthetic object.'
+  }
+];
+
+const STRONG_LINKS = [
+  ['train', 'bushwalk', 'Anticipation ↔ memory'],
+  ['paperback', 'boxer', 'Letters / correspondence'],
+  ['boxer', 'bushwalk', 'War embodied ↔ war discussed'],
+  ['root', 'paperback', 'Mesh network ↔ human network'],
+  ['root', 'vaporwave', 'Tree-writing → synthetic world'],
+  ['paperback', 'vaporwave', 'Page → surreal scene'],
+];
+
+const SOFT_LINKS = [
+  ['train', 'root'],
+  ['train', 'paperback'],
+  ['train', 'vaporwave'],
+  ['bushwalk', 'root'],
+  ['bushwalk', 'paperback'],
+  ['bushwalk', 'vaporwave'],
+  ['boxer', 'root'],
+  ['boxer', 'vaporwave'],
+];
+
+// TMAPO recurrence lines (golden threads)
+const TMAPO_LINKS = [
+  ['paperback', 'root'],
+  ['root', 'train'],
+  ['paperback', 'boxer'],
+  ['train', 'bushwalk'],
+  ['bushwalk', 'vaporwave'],
+  ['vaporwave', 'paperback'],
+];
+
+const canvas = document.getElementById('constellation-canvas');
+const ctx = canvas.getContext('2d');
+const infoPanel = document.getElementById('constellation-info');
+
+let nodes = [];
+let hoveredNode = null;
+let dpr = window.devicePixelRatio || 1;
+let W, H;
+let time = 0;
+let particles = [];
+
+function resize() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  W = rect.width;
+  H = rect.height;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  layoutNodes();
+}
+
+function layoutNodes() {
+  const cx = W / 2;
+  const cy = H / 2;
+  const rx = Math.min(W * 0.32, 280);
+  const ry = Math.min(H * 0.34, 200);
+
+  // Arrange in a slightly irregular constellation
+  const positions = [
+    { x: cx - rx * 0.2, y: cy - ry * 0.85 },   // train (top center-left)
+    { x: cx + rx * 0.75, y: cy - ry * 0.45 },   // bushwalk (right upper)
+    { x: cx + rx * 0.9, y: cy + ry * 0.4 },     // root (right lower)
+    { x: cx - rx * 0.1, y: cy + ry * 0.9 },      // paperback (bottom center)
+    { x: cx - rx * 0.85, y: cy + ry * 0.3 },     // boxer (left lower)
+    { x: cx - rx * 0.7, y: cy - ry * 0.5 },      // vaporwave (left upper)
+  ];
+
+  nodes = VIGNETTES.map((v, i) => ({
+    ...v,
+    x: positions[i].x,
+    y: positions[i].y,
+    r: 22,
+    pulsePhase: Math.random() * Math.PI * 2
+  }));
+
+  // Generate ambient particles
+  particles = [];
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.15,
+      r: Math.random() * 1.5 + 0.3,
+      alpha: Math.random() * 0.15 + 0.03
+    });
+  }
+}
+
+function getNode(id) {
+  return nodes.find(n => n.id === id);
+}
+
+function drawLine(a, b, color, width, dashed) {
+  ctx.beginPath();
+  if (dashed) ctx.setLineDash([4, 6]);
+  else ctx.setLineDash([]);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.moveTo(a.x, a.y);
+  ctx.lineTo(b.x, b.y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function draw() {
+  time += 0.008;
+  ctx.clearRect(0, 0, W, H);
+
+  // Background gradient
+  const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W, H) * 0.6);
+  grad.addColorStop(0, '#151820');
+  grad.addColorStop(1, '#0c0e13');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Particles
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0) p.x = W;
+    if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H;
+    if (p.y > H) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(200, 204, 216, ${p.alpha})`;
+    ctx.fill();
+  });
+
+  // Soft links (dashed)
+  SOFT_LINKS.forEach(([aId, bId]) => {
+    const a = getNode(aId), b = getNode(bId);
+    let alpha = 0.08;
+    if (hoveredNode && (hoveredNode.id === aId || hoveredNode.id === bId)) alpha = 0.25;
+    drawLine(a, b, `rgba(107, 112, 132, ${alpha})`, 1, true);
+  });
+
+  // Strong links
+  STRONG_LINKS.forEach(([aId, bId, label]) => {
+    const a = getNode(aId), b = getNode(bId);
+    let alpha = 0.2;
+    let width = 1.5;
+    if (hoveredNode && (hoveredNode.id === aId || hoveredNode.id === bId)) {
+      alpha = 0.6;
+      width = 2;
+    }
+    drawLine(a, b, `rgba(123, 140, 222, ${alpha})`, width, false);
+
+    // Label on hover
+    if (hoveredNode && (hoveredNode.id === aId || hoveredNode.id === bId)) {
+      const mx = (a.x + b.x) / 2;
+      const my = (a.y + b.y) / 2;
+      ctx.font = '10px "JetBrains Mono", monospace';
+      ctx.fillStyle = `rgba(123, 140, 222, 0.7)`;
+      ctx.textAlign = 'center';
+      ctx.fillText(label, mx, my - 6);
+    }
+  });
+
+  // TMAPO golden threads
+  TMAPO_LINKS.forEach(([aId, bId]) => {
+    const a = getNode(aId), b = getNode(bId);
+    let alpha = 0.1 + Math.sin(time * 1.5) * 0.04;
+    if (hoveredNode && (hoveredNode.id === aId || hoveredNode.id === bId)) alpha = 0.4;
+    drawLine(a, b, `rgba(224, 200, 122, ${alpha})`, 1, false);
+  });
+
+  // Nodes
+  nodes.forEach(node => {
+    const isHovered = hoveredNode && hoveredNode.id === node.id;
+    const isConnected = hoveredNode && (
+      STRONG_LINKS.some(([a, b]) => (a === hoveredNode.id && b === node.id) || (b === hoveredNode.id && a === node.id)) ||
+      SOFT_LINKS.some(([a, b]) => (a === hoveredNode.id && b === node.id) || (b === hoveredNode.id && a === node.id)) ||
+      TMAPO_LINKS.some(([a, b]) => (a === hoveredNode.id && b === node.id) || (b === hoveredNode.id && a === node.id))
+    );
+    const dimmed = hoveredNode && !isHovered && !isConnected;
+
+    // Glow
+    const pulse = Math.sin(time * 2 + node.pulsePhase) * 0.3 + 0.7;
+    const glowR = node.r * (isHovered ? 3 : 2) * pulse;
+    const glowGrad = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, glowR);
+    const glowAlpha = dimmed ? 0.02 : (isHovered ? 0.2 : 0.08);
+    glowGrad.addColorStop(0, node.color + Math.round(glowAlpha * 255).toString(16).padStart(2, '0'));
+    glowGrad.addColorStop(1, node.color + '00');
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, glowR, 0, Math.PI * 2);
+    ctx.fillStyle = glowGrad;
+    ctx.fill();
+
+    // Circle
+    const r = isHovered ? node.r * 1.15 : node.r;
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = dimmed ? '#1a1e28' : (isHovered ? node.color + 'dd' : node.color + '44');
+    ctx.fill();
+    ctx.strokeStyle = dimmed ? node.color + '22' : node.color + (isHovered ? 'ff' : '88');
+    ctx.lineWidth = isHovered ? 2 : 1.5;
+    ctx.stroke();
+
+    // Label
+    ctx.font = `${isHovered ? '500' : '400'} 11px "Inter", sans-serif`;
+    ctx.fillStyle = dimmed ? '#3a3f50' : (isHovered ? '#e8eaf0' : '#9ca0b0');
+    ctx.textAlign = 'center';
+    ctx.fillText(node.label, node.x, node.y + node.r + 16);
+
+    // Signature on hover
+    if (isHovered) {
+      ctx.font = '300 9px "JetBrains Mono", monospace';
+      ctx.fillStyle = node.color + 'aa';
+      ctx.fillText(node.signature, node.x, node.y + node.r + 28);
+    }
+  });
+
+  // Center label
+  ctx.font = 'italic 500 13px "Alegreya", serif';
+  ctx.fillStyle = `rgba(224, 200, 122, ${0.15 + Math.sin(time) * 0.05})`;
+  ctx.textAlign = 'center';
+  ctx.fillText('Their Most August Public Organ', W / 2, H / 2 + 2);
+  ctx.font = '300 8px "JetBrains Mono", monospace';
+  ctx.fillStyle = `rgba(224, 200, 122, ${0.1 + Math.sin(time) * 0.03})`;
+  ctx.fillText('signal interference', W / 2, H / 2 + 16);
+
+  requestAnimationFrame(draw);
+}
+
+canvas.addEventListener('mousemove', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  hoveredNode = null;
+  for (const node of nodes) {
+    const dx = mx - node.x;
+    const dy = my - node.y;
+    if (dx * dx + dy * dy < (node.r + 10) * (node.r + 10)) {
+      hoveredNode = node;
+      break;
+    }
+  }
+
+  if (hoveredNode) {
+    canvas.style.cursor = 'pointer';
+    infoPanel.style.display = 'block';
+    infoPanel.innerHTML = `
+      <span class="tag" style="color:${hoveredNode.color}">${hoveredNode.signature}</span>
+      <h4 style="color:${hoveredNode.color}">${hoveredNode.label}</h4>
+      <p>${hoveredNode.desc}</p>
+      <p style="margin-top:0.5rem; color: var(--tmapo);"><strong>TMAPO appears as:</strong> ${hoveredNode.tmapo}</p>
+    `;
+  } else {
+    canvas.style.cursor = 'crosshair';
+    infoPanel.style.display = 'none';
+  }
+});
+
+canvas.addEventListener('mouseleave', () => {
+  hoveredNode = null;
+  infoPanel.style.display = 'none';
+});
+
+window.addEventListener('resize', resize);
+resize();
+draw();
+</script>
+
+</body>
+</html>
