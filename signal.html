@@ -1091,6 +1091,198 @@ input, textarea { font-family: inherit; }
 }
 
 .export-download:hover { background: rgba(90, 158, 111, 0.25); }
+
+/* ── OPENING SCREEN ── */
+.opening {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+}
+
+.opening.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opening-card {
+  max-width: 540px;
+  width: 90%;
+  text-align: center;
+}
+
+.opening-signal {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 2rem;
+  animation: openingPulse 3s ease-in-out infinite;
+}
+
+@keyframes openingPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.opening-prompt {
+  font-family: 'Alegreya', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 2.5rem;
+  min-height: 4em;
+}
+
+.opening-resume {
+  margin-bottom: 2rem;
+}
+
+.opening-resume .or-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.5rem;
+}
+
+.opening-resume .or-last {
+  font-family: 'Alegreya', serif;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.opening-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.opening-stat {
+  text-align: center;
+}
+
+.opening-stat .os-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-bright);
+}
+
+.opening-stat .os-label {
+  font-size: 0.65rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.opening-enter {
+  padding: 0.6rem 2.5rem;
+  background: rgba(224, 200, 122, 0.08);
+  border: 1px solid rgba(224, 200, 122, 0.2);
+  border-radius: 6px;
+  color: var(--tmapo);
+  font-family: 'Alegreya', serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 1rem;
+}
+
+.opening-enter:hover {
+  background: rgba(224, 200, 122, 0.15);
+  border-color: rgba(224, 200, 122, 0.35);
+}
+
+.opening-file-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.opening-file-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.opening-file-btn:hover {
+  color: var(--text-dim);
+  border-color: var(--border-glow);
+  background: var(--surface);
+}
+
+/* ── SAVE REMINDER ── */
+.save-reminder {
+  position: fixed;
+  bottom: calc(var(--status-h) + 8px);
+  right: 1rem;
+  background: rgba(19, 22, 29, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(224, 200, 122, 0.2);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  display: none;
+  align-items: center;
+  gap: 0.8rem;
+  z-index: 60;
+  animation: reminderSlide 0.3s ease;
+}
+
+@keyframes reminderSlide {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.save-reminder.visible { display: flex; }
+
+.save-reminder .sr-text {
+  font-size: 0.72rem;
+  color: var(--tmapo);
+}
+
+.save-reminder .sr-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(224, 200, 122, 0.1);
+  border: 1px solid rgba(224, 200, 122, 0.2);
+  color: var(--tmapo);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.save-reminder .sr-btn:hover { background: rgba(224, 200, 122, 0.2); }
+
+.save-reminder .sr-dismiss {
+  font-size: 0.6rem;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.save-reminder .sr-dismiss:hover { color: var(--text-dim); }
 </style>
 </head>
 <body>
@@ -1107,6 +1299,8 @@ input, textarea { font-family: inherit; }
     <button class="topbar-btn" onclick="togglePanel('ascii')" id="tb-ascii">ASCII</button>
     <button class="topbar-btn" onclick="togglePanel('driftmap')" id="tb-driftmap">Drift Map</button>
     <button class="topbar-btn" onclick="showHandover()">Handover</button>
+    <button class="topbar-btn" onclick="saveToFile()" title="Save to .json file (Cmd+S)">Save</button>
+    <button class="topbar-btn" onclick="loadFromFile()" title="Load from .json file">Load</button>
     <button class="topbar-btn" onclick="showExport()">Export</button>
     <a class="topbar-btn" href="how-to.html" target="_blank" style="text-decoration:none">How To</a>
     <button class="topbar-btn" onclick="showShortcuts()">?</button>
@@ -1269,9 +1463,32 @@ input, textarea { font-family: inherit; }
     </div>
     <div class="sc-group">
       <div class="sc-group-title">File</div>
+      <div class="shortcut-row"><span>Save to file</span><kbd>⌘ S</kbd></div>
       <div class="shortcut-row"><span>Export manuscript</span><kbd>⌘ Shift E</kbd></div>
     </div>
   </div>
+</div>
+
+<!-- ═══════ OPENING SCREEN ═══════ -->
+<div class="opening" id="opening">
+  <div class="opening-card">
+    <div class="opening-signal">signal received</div>
+    <div class="opening-prompt" id="opening-prompt"></div>
+    <div class="opening-resume" id="opening-resume"></div>
+    <div class="opening-stats" id="opening-stats"></div>
+    <button class="opening-enter" onclick="enterEditor()">Enter the drift</button>
+    <div class="opening-file-btns">
+      <button class="opening-file-btn" onclick="loadFromFile()">Load from file</button>
+      <button class="opening-file-btn" onclick="enterEditor()">Continue in browser</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ SAVE REMINDER ═══════ -->
+<div class="save-reminder" id="save-reminder">
+  <span class="sr-text">Save your manuscript to a file?</span>
+  <button class="sr-btn" onclick="saveToFile()">Save to file</button>
+  <span class="sr-dismiss" onclick="dismissReminder()">&times;</span>
 </div>
 
 <!-- ═══════ EXPORT OVERLAY ═══════ -->
@@ -2190,13 +2407,210 @@ function updateConstellationActive() {
   // The draw loop will pick up the state change automatically
 }
 
+// ═══════ OPENING SCREEN ═══════
+
+const PROMPTS = [
+  { text: "The train has just passed Hawkesbury River. The light on the water is doing something you can't quite name.", vig: 'train' },
+  { text: "There's a paperback on the seat beside you. The cover is sun-warped. You can't remember buying it.", vig: 'train' },
+  { text: "Your reflection in the window is overlaid on the paddocks. For a moment, you can't tell which is moving.", vig: 'train' },
+  { text: "The train hums a single low note beneath you. It has been saying the same thing since Newcastle.", vig: 'train' },
+  { text: "Somewhere between Woy Woy and Gosford, the landscape starts thinking back at you.", vig: 'train' },
+  { text: "Andrew is tying his boots at the trailhead. He hasn't seen you yet. What have you been carrying all this way?", vig: 'bushwalk' },
+  { text: "The hill is steeper than you remember. Halfway up, your conversation about moral certainty dissolves into breathing.", vig: 'bushwalk' },
+  { text: "A slug on your arm. The philosophy of history suddenly feels very far away.", vig: 'bushwalk' },
+  { text: "At the lookout, you both stop talking. The landscape doesn't need your ideas. It just persists.", vig: 'bushwalk' },
+  { text: "Andrew says something about the end of narrative. A branch scrapes your shoulder. Both things are equally true.", vig: 'bushwalk' },
+  { text: "A tree near Wollombi has started emitting. The file it holds is not the one that was installed.", vig: 'root' },
+  { text: "The mesh node in the old motel is blinking a pattern you haven't seen before. She notices it first.", vig: 'root' },
+  { text: "their_most_august_public_organ.txt was last modified by an author with no name.", vig: 'root' },
+  { text: "The birdsong files have changed. The maps fold differently now. Something is writing that is not us.", vig: 'root' },
+  { text: "Under the stars, on a blanket, she asks you whether preservation is the same as remembering. You don't answer.", vig: 'root' },
+  { text: "You are lying on someone's couch in Merewether. A paperback is open on your chest. You've forgotten which page you were on.", vig: 'paperback' },
+  { text: "The rooftop party last night left salt on your skin and an idea you can't quite hold. You start a letter to the boxer.", vig: 'paperback' },
+  { text: "The secondhand bookshop smells like warm dust. A title catches your eye. The font on the cover is slightly wrong.", vig: 'paperback' },
+  { text: "You're reading about a man who fights in pubs. You're not sure if this is the book or the letter.", vig: 'paperback' },
+  { text: "Summer in Newcastle is a state of mind where everything blurs: what you've read, what you've lived, what you've imagined.", vig: 'paperback' },
+  { text: "The boxer tapes his hands. The tape is old. What is he not saying?", vig: 'boxer' },
+  { text: "In the car park behind the pub, someone has drawn a circle in chalk. He steps into it without ceremony.", vig: 'boxer' },
+  { text: "She watches from the ute. She has seen this before. She will see it again. The repetition is the point.", vig: 'boxer' },
+  { text: "After the fight, he sits in the cold air. His hands are still. The world is still. The meaning didn't arrive.", vig: 'boxer' },
+  { text: "A letter from the city. The slacker writes about history. The boxer folds it and puts it in his bag without replying.", vig: 'boxer' },
+  { text: "The bushranger adjusts his jetpack. The food court hums with a frequency that doesn't belong to any decade.", vig: 'vaporwave' },
+  { text: "Her skirt shifts colour as she turns. The reflection contains a landscape that isn't behind her.", vig: 'vaporwave' },
+  { text: "The signage above the ramen stand reads: THEIR MOST AUGUST PUBLIC ORGAN. Nobody seems to notice.", vig: 'vaporwave' },
+  { text: "This place feels like a page from a book you half-read on a couch in Merewether, years ago. Or tomorrow.", vig: 'vaporwave' },
+  { text: "The bushranger speaks. His voice sounds like it's been downloaded from somewhere else.", vig: 'vaporwave' },
+  { text: "Every vignette is a frequency. Today, which one is humming loudest?", vig: null },
+  { text: "The book is already being written. You just need to listen to it for a while.", vig: null },
+  { text: "What is the last thing the scene touched? Start there.", vig: null },
+  { text: "Not what happens next. What connects.", vig: null },
+  { text: "The tree is writing. The train is moving. The boxer is breathing. Which one are you today?", vig: null },
+  { text: "Somewhere in the mesh network, a file is changing. Somewhere on a train, a man is looking out a window. They are the same process.", vig: null },
+];
+
+function showOpeningScreen() {
+  const prompt = PROMPTS[Math.floor(Math.random() * PROMPTS.length)];
+  const promptEl = document.getElementById('opening-prompt');
+  const resumeEl = document.getElementById('opening-resume');
+  const statsEl = document.getElementById('opening-stats');
+
+  // Prompt
+  let promptColor = 'var(--text)';
+  if (prompt.vig) promptColor = VIG_MAP[prompt.vig]?.color || 'var(--text)';
+  promptEl.innerHTML = `<span style="color:${promptColor}">${prompt.text}</span>`;
+
+  // Resume info
+  const tw = totalWords();
+  if (tw > 0) {
+    // Find last written segment
+    const lastWritten = [...state.segments].reverse().find(s => s.content.trim());
+    if (lastWritten) {
+      const v = VIG_MAP[lastWritten.vignette];
+      const text = lastWritten.content.trim();
+      const sentences = text.split(/[.!?]+/).filter(s => s.trim());
+      let lastLine = sentences.length > 0 ? sentences[sentences.length - 1].trim() : text.slice(-80);
+      if (lastLine.length > 100) lastLine = '...' + lastLine.slice(-100);
+
+      resumeEl.innerHTML = `
+        <div class="or-label">You were last in <span style="color:${v.color}">${v.label}</span></div>
+        <div class="or-last">"${escapeHtml(lastLine)}"</div>
+      `;
+    }
+
+    // Stats
+    const vigCount = new Set(state.segments.map(s => s.vignette)).size;
+    statsEl.innerHTML = `
+      <div class="opening-stat">
+        <div class="os-num">${tw.toLocaleString()}</div>
+        <div class="os-label">words</div>
+      </div>
+      <div class="opening-stat">
+        <div class="os-num">${state.segments.length}</div>
+        <div class="os-label">segments</div>
+      </div>
+      <div class="opening-stat">
+        <div class="os-num">${vigCount}</div>
+        <div class="os-label">vignettes</div>
+      </div>
+    `;
+  } else {
+    resumeEl.innerHTML = `<div class="or-label" style="color:var(--text-faint)">A blank page. The train hasn't left yet.</div>`;
+    statsEl.innerHTML = '';
+  }
+}
+
+function enterEditor() {
+  const opening = document.getElementById('opening');
+  opening.classList.add('fade-out');
+  setTimeout(() => {
+    opening.style.display = 'none';
+    // Focus the active textarea
+    const ta = document.getElementById('ta-' + state.activeSegmentId);
+    if (ta) ta.focus();
+  }, 800);
+}
+
+// ═══════ FILE SAVE / LOAD ═══════
+
+function saveToFile() {
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tmapo-signal-data.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+
+  // Reset reminder
+  lastFileSaveWords = totalWords();
+  lastFileSaveTime = Date.now();
+  dismissReminder();
+
+  // Flash status
+  const el = document.getElementById('sb-saved');
+  el.textContent = 'saved to file';
+  el.classList.add('just-saved');
+  setTimeout(() => {
+    el.textContent = 'saved';
+    el.classList.remove('just-saved');
+  }, 2500);
+}
+
+function loadFromFile() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const loaded = JSON.parse(ev.target.result);
+        state = { ...state, ...loaded };
+        if (!state.activeSegmentId && state.segments.length) {
+          state.activeSegmentId = state.segments[state.segments.length - 1].id;
+        }
+        state.currentVignette = getActiveSegment()?.vignette || 'train';
+        save(); // Persist to localStorage too
+        render();
+        showOpeningScreen(); // Refresh the opening with new data
+      } catch(err) {
+        alert('Could not read file. Make sure it is a Signal JSON file.');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// ═══════ SAVE REMINDER ═══════
+
+let lastFileSaveWords = 0;
+let lastFileSaveTime = Date.now();
+const REMINDER_WORD_THRESHOLD = 300;
+const REMINDER_TIME_THRESHOLD = 20 * 60 * 1000; // 20 minutes
+
+function checkSaveReminder() {
+  const wordsSinceLastSave = totalWords() - lastFileSaveWords;
+  const timeSinceLastSave = Date.now() - lastFileSaveTime;
+
+  if (wordsSinceLastSave >= REMINDER_WORD_THRESHOLD || timeSinceLastSave >= REMINDER_TIME_THRESHOLD) {
+    if (totalWords() > 0) {
+      document.getElementById('save-reminder').classList.add('visible');
+    }
+  }
+}
+
+function dismissReminder() {
+  document.getElementById('save-reminder').classList.remove('visible');
+  lastFileSaveTime = Date.now(); // Reset timer so it doesn't nag immediately
+}
+
+// Check periodically
+setInterval(checkSaveReminder, 60000); // Every minute
+
+// ═══════ KEYBOARD SHORTCUTS (additions) ═══════
+
+// Add Cmd+S for save to file
+const origKeydown = document.onkeydown;
+document.addEventListener('keydown', (e) => {
+  const meta = e.metaKey || e.ctrlKey;
+  if (meta && !e.shiftKey && e.key.toLowerCase() === 's') {
+    e.preventDefault();
+    saveToFile();
+  }
+});
+
 // ═══════ INIT ═══════
 
 function init() {
   load();
+  lastFileSaveWords = totalWords();
   render();
   resizeMiniConstellation();
   drawMiniConstellation();
+  showOpeningScreen();
 }
 
 window.addEventListener('resize', () => {

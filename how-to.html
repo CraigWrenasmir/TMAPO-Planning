@@ -452,6 +452,7 @@ footer p {
       <li><a href="#driftmap">Drift map</a></li>
       <li><a href="#pressure">Pressure margin</a></li>
       <li><a href="#export">Export</a></li>
+      <li><a href="#opening">The opening screen</a></li>
       <li><a href="#saving">Saving and data</a></li>
       <li><a href="#shortcuts">All keyboard shortcuts</a></li>
     </ol>
@@ -687,27 +688,66 @@ footer p {
     <p>You can <strong>copy to clipboard</strong> or <strong>download as a .txt file</strong>.</p>
   </section>
 
-  <!-- 14. SAVING -->
-  <section id="saving">
-    <h2>14. Saving and data</h2>
-    <p>Signal <strong>auto-saves to your browser's localStorage</strong> as you type (with a short debounce). The status bar shows "saved" when a save completes.</p>
+  <!-- 14. OPENING SCREEN -->
+  <section id="opening">
+    <h2>14. The opening screen</h2>
+    <p>Each time you open Signal, you're greeted by a <strong>transmission from inside the book</strong>. It shows:</p>
 
-    <p><strong>Important things to know:</strong></p>
-    <ul class="plain">
-      <li>Your data lives in your browser only. It's not synced to a server or to GitHub.</li>
-      <li>Clearing your browser data will erase your manuscript. Export regularly.</li>
-      <li>The data is tied to the specific browser and domain. If you access Signal on a different device or browser, it will start fresh.</li>
-      <li>For backup, use Export to download a .txt file periodically.</li>
-    </ul>
+    <h3>A drift prompt</h3>
+    <p>A randomly selected evocative fragment drawn from the world of TMAPO. Not "write 500 words today" but something like:</p>
+    <div class="tip gold">
+      <em>"A tree near Wollombi has started emitting. The file it holds is not the one that was installed."</em>
+    </div>
+    <p>There are 36 prompts across all six vignettes plus several that address the book as a whole. A different one appears each time you open Signal. They're designed to place you inside the book before you've written a word.</p>
+
+    <h3>Where you left off</h3>
+    <p>If you have existing writing, the opening shows your last vignette and the last sentence you wrote, so you can feel your way back into the drift immediately.</p>
+
+    <h3>Your progress</h3>
+    <p>Word count, segment count, and how many vignettes you've touched. Quiet progress, not pressure.</p>
+
+    <h3>File controls</h3>
+    <p>From the opening screen you can also <strong>Load from file</strong> to restore a previously saved manuscript, or <strong>Continue in browser</strong> to use whatever is in localStorage.</p>
+
+    <p>Click <strong>Enter the drift</strong> to begin writing.</p>
+  </section>
+
+  <!-- 15. SAVING -->
+  <section id="saving">
+    <h2>15. Saving and data</h2>
+    <p>Signal has two layers of saving:</p>
+
+    <h3>Auto-save (browser)</h3>
+    <p>Signal <strong>auto-saves to your browser's localStorage</strong> as you type. This means your work persists between sessions on the same browser. The status bar shows "saved" when a save completes.</p>
+
+    <h3>Save to file (recommended)</h3>
+    <p>Press <kbd>Cmd</kbd> + <kbd>S</kbd> or click <strong>Save</strong> in the top bar. This downloads a <code>tmapo-signal-data.json</code> file containing your entire manuscript, fragments, TMAPO log, and thread tags.</p>
+    <p>To restore from a file, click <strong>Load</strong> in the top bar (or on the opening screen) and select a previously saved JSON file.</p>
 
     <div class="tip green">
-      <strong>Recommendation:</strong> Export and download your manuscript at the end of each writing session. Keep those .txt files somewhere safe. Think of Signal as a writing environment, not a filing cabinet.
+      <strong>Recommended workflow:</strong>
+      <ol class="steps">
+        <li>Write in Signal (auto-saves to browser as you go)</li>
+        <li>When you're done for the day, press <kbd>Cmd</kbd> + <kbd>S</kbd> to save a .json file</li>
+        <li>Move that file into your <code>TMAPO-Planning</code> folder</li>
+        <li>Git commit and push when you want it backed up to GitHub</li>
+      </ol>
+      <p>This gives you version history through git, cloud backup through GitHub, and a portable file you can load on any device.</p>
     </div>
+
+    <h3>Save reminders</h3>
+    <p>After every 300 words or 20 minutes of writing (whichever comes first), a gentle reminder appears in the bottom-right corner asking if you'd like to save to a file. Click <strong>Save to file</strong> or dismiss it.</p>
+
+    <h3>Export vs Save</h3>
+    <ul class="plain">
+      <li><strong>Save</strong> (<kbd>Cmd</kbd> + <kbd>S</kbd>): downloads a .json file with all data (manuscript, fragments, threads, TMAPO log). This can be loaded back into Signal.</li>
+      <li><strong>Export</strong> (<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd>): generates a plain text version of the manuscript for reading or sharing. This is a one-way export &mdash; it can't be loaded back in.</li>
+    </ul>
   </section>
 
   <!-- 15. SHORTCUTS -->
   <section id="shortcuts">
-    <h2>15. All keyboard shortcuts</h2>
+    <h2>16. All keyboard shortcuts</h2>
     <p>Press <kbd>Cmd</kbd> + <kbd>/</kbd> inside Signal to see these at any time.</p>
 
     <table class="shortcut-table">
@@ -727,6 +767,7 @@ footer p {
         <tr><td>Toggle Threads panel</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd></td></tr>
         <tr><td>Toggle Fragments panel</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></td></tr>
         <tr><td>Toggle Drift Map panel</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd></td></tr>
+        <tr><td>Save to file</td><td><kbd>Cmd</kbd> + <kbd>S</kbd></td></tr>
         <tr><td>Export manuscript</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd></td></tr>
         <tr><td>Show shortcuts</td><td><kbd>Cmd</kbd> + <kbd>/</kbd></td></tr>
         <tr><td>Close overlay / panel</td><td><kbd>Esc</kbd></td></tr>
