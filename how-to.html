@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How To — Signal Drift Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0e13;
+  --surface: #13161d;
+  --surface-raised: #1a1e28;
+  --border: #252a36;
+  --text: #c8ccd8;
+  --text-dim: #6b7084;
+  --text-faint: #3d4255;
+  --text-bright: #e8eaf0;
+  --accent: #7b8cde;
+  --train: #6b9bd2;
+  --bushwalk: #5a9e6f;
+  --root: #8b7ec8;
+  --paperback: #d4a054;
+  --boxer: #c75d5d;
+  --vaporwave: #d06bc4;
+  --tmapo: #e0c87a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 15px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+::selection {
+  background: rgba(123, 140, 222, 0.3);
+  color: var(--text-bright);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(12, 14, 19, 0.88);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+nav .brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tmapo);
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+nav .sep { color: var(--text-faint); font-size: 0.8rem; }
+
+nav .page-title {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-bright);
+}
+
+nav .nav-links {
+  margin-left: auto;
+  display: flex;
+  gap: 0.3rem;
+}
+
+nav .nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.7rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+nav .nav-links a:hover {
+  color: var(--text-bright);
+  background: var(--surface-raised);
+}
+
+/* ── CONTENT ── */
+.page {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 5.5rem 2rem 4rem;
+}
+
+.hero {
+  margin-bottom: 3rem;
+}
+
+.hero .kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.8rem;
+}
+
+.hero h1 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 2.2rem;
+  color: var(--text-bright);
+  line-height: 1.25;
+  margin-bottom: 1rem;
+}
+
+.hero .intro {
+  font-size: 1rem;
+  color: var(--text-dim);
+  max-width: 600px;
+  line-height: 1.8;
+}
+
+/* TOC */
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.toc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.6rem;
+}
+
+.toc ol {
+  list-style: none;
+  counter-reset: toc;
+  padding: 0;
+}
+
+.toc li {
+  counter-increment: toc;
+  margin-bottom: 0.25rem;
+}
+
+.toc li::before {
+  content: counter(toc) ".";
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  margin-right: 0.5rem;
+}
+
+.toc a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: color 0.2s;
+}
+
+.toc a:hover { color: var(--text-bright); }
+
+/* Sections */
+section {
+  margin-bottom: 3rem;
+}
+
+section h2 {
+  font-family: 'Alegreya', serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--text-bright);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+section h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-bright);
+  margin: 1.5rem 0 0.5rem;
+}
+
+p {
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+}
+
+/* Keyboard shortcut display */
+kbd {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-bright);
+  white-space: nowrap;
+}
+
+/* Info boxes */
+.tip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.tip.gold { border-left-color: var(--tmapo); }
+.tip.green { border-left-color: var(--bushwalk); }
+
+.tip strong {
+  color: var(--text-bright);
+  font-weight: 500;
+}
+
+/* Feature cards */
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem;
+  margin: 1rem 0;
+}
+
+.feature-card h4 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--text-bright);
+  margin-bottom: 0.4rem;
+}
+
+.feature-card p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-bottom: 0.3rem;
+}
+
+.feature-card .fc-shortcut {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-faint);
+  margin-top: 0.3rem;
+}
+
+/* Vignette color swatches */
+.vig-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+
+.vig-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.vig-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.vig-item .vig-key {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-faint);
+}
+
+/* Shortcut table */
+.shortcut-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8rem 0;
+}
+
+.shortcut-table th {
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.shortcut-table td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid rgba(37, 42, 54, 0.5);
+  font-size: 0.82rem;
+}
+
+.shortcut-table td:first-child {
+  color: var(--text-dim);
+}
+
+/* Steps */
+ol.steps {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+ol.steps li {
+  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+}
+
+ul.plain {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+ul.plain li {
+  padding: 0.2rem 0;
+  font-size: 0.88rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+ul.plain li::before {
+  content: "\2014";
+  position: absolute;
+  left: 0;
+  color: var(--text-faint);
+}
+
+/* Screenshot-style diagrams */
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* Footer */
+footer {
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+footer a:hover { color: var(--text-bright); }
+
+footer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-faint);
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 1.7rem; }
+  .vig-list { grid-template-columns: 1fr; }
+  nav .page-title { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="signal.html" class="brand">Signal</a>
+  <span class="sep">/</span>
+  <span class="page-title">How To</span>
+  <div class="nav-links">
+    <a href="signal.html">Open Editor</a>
+    <a href="index.html">Planning</a>
+  </div>
+</nav>
+
+<main class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="kicker">Guide</p>
+    <h1>How to use Signal</h1>
+    <p class="intro">Signal is a drift editor built specifically for writing <em>Their Most August Public Organ</em>. It's not a word processor. It's a writing environment that knows about your constellation of vignettes and helps you move between them.</p>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-label">Contents</div>
+    <ol>
+      <li><a href="#concept">The idea behind Signal</a></li>
+      <li><a href="#layout">Layout overview</a></li>
+      <li><a href="#writing">Writing and blocks</a></li>
+      <li><a href="#vignettes">Switching vignettes</a></li>
+      <li><a href="#constellation">The constellation</a></li>
+      <li><a href="#threads">Thread tracking</a></li>
+      <li><a href="#tmapo">TMAPO recurrence log</a></li>
+      <li><a href="#handover">The handover prompt</a></li>
+      <li><a href="#fragments">Fragment drawer</a></li>
+      <li><a href="#ascii">ASCII workbench</a></li>
+      <li><a href="#driftmap">Drift map</a></li>
+      <li><a href="#pressure">Pressure margin</a></li>
+      <li><a href="#export">Export</a></li>
+      <li><a href="#saving">Saving and data</a></li>
+      <li><a href="#shortcuts">All keyboard shortcuts</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. CONCEPT -->
+  <section id="concept">
+    <h2>1. The idea behind Signal</h2>
+    <p>Most writing tools assume you're writing linearly: chapter 1, chapter 2, chapter 3. TMAPO doesn't work that way. It moves through drift, signal interference, and daydream logic between six vignettes of equal ontological weight.</p>
+    <p>Signal is built around that movement. Instead of chapters, you write in <strong>blocks</strong>, each tagged to a vignette. When you feel the pressure change and want to drift into another vignette, you switch. The tool tracks where you've been, what threads are active, and what each vignette last touched, so you can feel the shape of the book as you write it.</p>
+    <div class="tip gold">
+      <strong>The guiding question:</strong> "What is the last thing this scene touches?" Not "what happens next" but "what does this connect to?" Signal is built to help you answer that question at any point in the writing.
+    </div>
+  </section>
+
+  <!-- 2. LAYOUT -->
+  <section id="layout">
+    <h2>2. Layout overview</h2>
+    <div class="diagram">
++------------------+------------------------------------+--------------+
+|                  |                                    |              |
+|   LEFT RAIL      |       WRITING SURFACE              |  RIGHT PANEL |
+|                  |                                    |  (toggleable)|
+|  - Constellation |   blocks of text, each tagged      |              |
+|  - Vignette      |   to a vignette with a coloured    |  - Threads   |
+|    selector      |   bar on the left edge             |  - TMAPO     |
+|  - Word counts   |                                    |  - Fragments |
+|                  |   transitions marked with ~ ~ ~    |  - ASCII     |
+|                  |                                    |  - Drift Map |
+|                  |          [Handover prompt]          |              |
++------------------+------------------------------------+--------------+
+|  STATUS BAR: saved | word count | segment count | shortcuts hint    |
++---------------------------------------------------------------------+</div>
+    <ul class="plain">
+      <li><strong>Left rail:</strong> always visible. The constellation, vignette selector buttons (with word counts), and total word count.</li>
+      <li><strong>Writing surface:</strong> the main area. A continuous scroll of blocks. This is where you write.</li>
+      <li><strong>Right panel:</strong> slides open when you click a panel button in the top bar (Threads, TMAPO, Fragments, ASCII, Drift Map). Close it with <kbd>Esc</kbd> or by clicking the same button again.</li>
+      <li><strong>Top bar:</strong> shows the current vignette name (colour-coded) and toggle buttons for all panels.</li>
+      <li><strong>Status bar:</strong> at the bottom. Shows save status, total words, segment count, and quick shortcut hints.</li>
+    </ul>
+  </section>
+
+  <!-- 3. WRITING -->
+  <section id="writing">
+    <h2>3. Writing and blocks</h2>
+    <p>The manuscript is made of <strong>blocks</strong> (called segments). Each block is a text area tagged to one of the six vignettes. A coloured bar on the left edge shows which vignette the block belongs to.</p>
+
+    <h3>Creating a new block</h3>
+    <p>Press <kbd>Cmd</kbd> + <kbd>Enter</kbd> to create a new block in the same vignette, directly below the one you're writing in. You can also switch to a different vignette (see below), which automatically creates a new block if the current one has content.</p>
+
+    <h3>Moving between blocks</h3>
+    <p>Click into any block to make it active. The active block has a brighter coloured bar and its vignette glows in the constellation.</p>
+
+    <h3>Retagging a block</h3>
+    <p>Click the vignette label at the top-left of any block to cycle it through the six vignettes. Useful if you realise a passage belongs somewhere else.</p>
+
+    <h3>Deleting a block</h3>
+    <p>Hover over a block and click the <strong>&times;</strong> button that appears on the right of the header. You can't delete the last remaining block.</p>
+
+    <div class="tip">
+      <strong>Writing feel:</strong> The text is set in Alegreya at a comfortable reading size with generous line-height. This matches the typographic intention of the novel itself: spacious, refined, room to breathe.
+    </div>
+  </section>
+
+  <!-- 4. VIGNETTES -->
+  <section id="vignettes">
+    <h2>4. Switching vignettes</h2>
+    <p>This is the core action of Signal. When the pressure changes and you want to drift into a different vignette:</p>
+
+    <p>Press <kbd>Cmd</kbd> + a number key:</p>
+
+    <div class="vig-list">
+      <div class="vig-item"><span class="vig-swatch" style="background:#6b9bd2"></span> The Train <span class="vig-key">Cmd + 1</span></div>
+      <div class="vig-item"><span class="vig-swatch" style="background:#5a9e6f"></span> The Bushwalk <span class="vig-key">Cmd + 2</span></div>
+      <div class="vig-item"><span class="vig-swatch" style="background:#8b7ec8"></span> Root <span class="vig-key">Cmd + 3</span></div>
+      <div class="vig-item"><span class="vig-swatch" style="background:#d4a054"></span> Paperback <span class="vig-key">Cmd + 4</span></div>
+      <div class="vig-item"><span class="vig-swatch" style="background:#c75d5d"></span> The Boxer <span class="vig-key">Cmd + 5</span></div>
+      <div class="vig-item"><span class="vig-swatch" style="background:#d06bc4"></span> Vaporwave Bushranger <span class="vig-key">Cmd + 6</span></div>
+    </div>
+
+    <p>Or click a vignette button in the left rail.</p>
+
+    <p><strong>What happens:</strong> if your current block is empty, it simply retags to the new vignette. If it has content, a new block is created below it, tagged to the new vignette. A <code>~ ~ ~</code> transition marker appears between blocks of different vignettes.</p>
+
+    <p>The top bar updates to show the current vignette name in its colour, and the constellation highlights the active node.</p>
+  </section>
+
+  <!-- 5. CONSTELLATION -->
+  <section id="constellation">
+    <h2>5. The constellation</h2>
+    <p>The mini constellation in the top-left of the rail is a living map of your book. It shows:</p>
+    <ul class="plain">
+      <li>Six nodes arranged in a circle, one per vignette</li>
+      <li>The <strong>current vignette glows</strong> with a pulsing halo</li>
+      <li>Structural connections between vignettes as faint lines</li>
+      <li>A <strong>golden dashed drift path</strong> tracing how the book has moved between vignettes, based on the order of your blocks</li>
+    </ul>
+    <p>As you write and switch between vignettes, the drift path grows and you can see the movement pattern of the manuscript at a glance.</p>
+    <div class="tip green">
+      <strong>Why this matters:</strong> The drift path shows you the book's rhythm. Are you lingering too long in one vignette? Have you not visited Root in a while? The constellation answers these questions without you having to think about them.
+    </div>
+  </section>
+
+  <!-- 6. THREADS -->
+  <section id="threads">
+    <h2>6. Thread tracking</h2>
+    <p>TMAPO has eight <strong>soft threads</strong> that recur across vignettes: breath, surfaces, signals, bodies, landscape, war/moral, drift, preservation. These are the invisible fibres that connect the daydreams.</p>
+
+    <h3>Tagging threads on a block</h3>
+    <p>Each block's header has a row of small thread pills. Click a pill to toggle that thread on/off for the block. Active threads appear highlighted.</p>
+    <p>You can also tag threads for the current block in the <strong>Threads panel</strong> (right side), under "Tag Current Block."</p>
+
+    <h3>The thread log</h3>
+    <p>Open the Threads panel with the top bar button or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd>. The log shows each thread with:</p>
+    <ul class="plain">
+      <li>How many times it has appeared (e.g. <code>3x</code>)</li>
+      <li>How far back the last appearance was (e.g. <code>4 blocks ago</code> or <code>this block</code>)</li>
+    </ul>
+    <p>This tells you at a glance: "Breath hasn't surfaced in 8 blocks. Maybe this passage wants it."</p>
+
+    <div class="tip">
+      <strong>When to tag:</strong> Don't overthink it. If a passage involves breathing, physical effort, or stillness, tag it <em>breath</em>. If you describe a window, a page, a wall, a fabric, tag it <em>surfaces</em>. These are feelings, not categories.
+    </div>
+  </section>
+
+  <!-- 7. TMAPO -->
+  <section id="tmapo">
+    <h2>7. TMAPO recurrence log</h2>
+    <p>The title phrase "Their Most August Public Organ" recurs throughout the novel in different forms, like Brautigan's "Trout Fishing in America." Each appearance is slightly different, slightly off.</p>
+
+    <h3>Logging an appearance</h3>
+    <p>Open the TMAPO panel from the top bar or click the <strong>TMAPO</strong> button. At the bottom, fill in:</p>
+    <ol class="steps">
+      <li><strong>Vignette:</strong> where the phrase appears</li>
+      <li><strong>Form:</strong> what it manifests as (e.g. "cheap paperback," "corrupted text file," "food court signage," "letter reference," "graffiti")</li>
+      <li><strong>Wording / context:</strong> the exact phrasing or how it appears in the text</li>
+    </ol>
+    <p>Click <strong>Log Appearance</strong>. The entry appears in the log above, showing all appearances across the book.</p>
+
+    <p>This helps you track: how many times has the phrase appeared? In which vignettes? Is it becoming more corrupted over time? More abstract? More or less legible?</p>
+  </section>
+
+  <!-- 8. HANDOVER -->
+  <section id="handover">
+    <h2>8. The handover prompt</h2>
+    <p>This is the heart of Signal's philosophy. Press <kbd>Cmd</kbd> + <kbd>H</kbd> or click <strong>Handover</strong> in the top bar.</p>
+
+    <p>A panel appears at the bottom of the writing surface with the question:</p>
+    <div class="tip gold">
+      <strong><em>What is the last thing this scene touches?</em></strong>
+    </div>
+
+    <p>Below it, each vignette is listed with the <strong>last sentence</strong> written in that vignette. This shows you what each world last touched: a surface, a sound, a thought, a rhythm.</p>
+
+    <p><strong>Click any vignette</strong> in the handover list to drift there. A new block is created, tagged to that vignette, and the handover closes.</p>
+
+    <h3>When to use it</h3>
+    <p>When the energy dips. When you feel a transition coming but aren't sure where to go. Open the handover, scan the last touches, and let one of them pull you forward. The connection becomes the transition.</p>
+
+    <p>Example: The Boxer's last touch was "the weight of his hands resting on his knees." Root's was "a faint hum from the relay node." Either could become a doorway. You don't decide logically. You feel which one connects to where you are now.</p>
+  </section>
+
+  <!-- 9. FRAGMENTS -->
+  <section id="fragments">
+    <h2>9. Fragment drawer</h2>
+    <p>Sometimes you write a passage that feels true but doesn't have a home yet. It doesn't belong to any vignette. It's just a fragment, hovering.</p>
+
+    <p>Open the Fragments panel with the top bar button or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd>.</p>
+
+    <h3>Writing a fragment</h3>
+    <p>At the bottom of the panel, there's a text area. Write your passage. Optionally add a <strong>mood</strong> (a word or phrase describing its feeling). Click <strong>Save</strong>.</p>
+
+    <h3>Using a fragment</h3>
+    <p>When you're writing and a fragment connects, click <strong>insert</strong> on the fragment card. It creates a new block in the manuscript with that text, tagged to whatever vignette is currently active. The fragment is removed from the drawer.</p>
+
+    <p>You can also <strong>delete</strong> fragments you no longer need.</p>
+  </section>
+
+  <!-- 10. ASCII -->
+  <section id="ascii">
+    <h2>10. ASCII workbench</h2>
+    <p>TMAPO uses ASCII art and text-visual notation as part of its language: landscape forms, score notation, network diagrams, text files. These are "pressure peaks" where prose fractures into visual form.</p>
+
+    <h3>Composing an ASCII block</h3>
+    <p>Open the ASCII panel from the top bar. You'll see a monospace text area. Compose your text-visual here, using the full width of the space.</p>
+    <p>Click <strong>Insert into Manuscript</strong>. A new block appears in the manuscript, styled in monospace with a dashed border in the vignette's colour.</p>
+
+    <h3>Quick ASCII block</h3>
+    <p>Press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd> to create an empty ASCII block directly in the manuscript, without opening the panel. Write directly into it.</p>
+
+    <div class="tip">
+      <strong>These are not illustrations.</strong> They are moments where language reorganises itself. Don't plan them. Let them emerge when the prose reaches a density where it can't hold itself as sentences anymore.
+    </div>
+  </section>
+
+  <!-- 11. DRIFT MAP -->
+  <section id="driftmap">
+    <h2>11. Drift map</h2>
+    <p>Open the Drift Map panel from the top bar or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>.</p>
+
+    <h3>The river</h3>
+    <p>At the top of the panel, a row of coloured blocks represents the manuscript. Each block is one segment, colour-coded by vignette, with width proportional to word count. ASCII blocks have a dashed outline. Hover any block to see its vignette and word count.</p>
+    <p>This gives you a bird's-eye view of the manuscript: where it lingers, where it moves quickly, and the pattern of vignette transitions.</p>
+
+    <h3>Distribution</h3>
+    <p>Below the river, a set of bars shows the percentage of total words in each vignette. This tells you if the balance feels right or if a vignette is being neglected.</p>
+  </section>
+
+  <!-- 12. PRESSURE -->
+  <section id="pressure">
+    <h2>12. Pressure margin</h2>
+    <p>As you write a dense, unbroken block of prose, the right edge of the block subtly warms in colour, shifting toward a faint red. This is the <strong>pressure margin</strong>.</p>
+    <p>It's ambient feedback. It doesn't tell you to stop or break. It just lets you feel the density building. When the pressure is high, you might want to:</p>
+    <ul class="plain">
+      <li>Insert an ASCII intrusion</li>
+      <li>Drift to another vignette</li>
+      <li>Let a paragraph break in</li>
+      <li>Or keep going, because sometimes the density is the point</li>
+    </ul>
+    <p>It resets when you add paragraph breaks or switch blocks.</p>
+  </section>
+
+  <!-- 13. EXPORT -->
+  <section id="export">
+    <h2>13. Export</h2>
+    <p>Press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> or click <strong>Export</strong> in the top bar.</p>
+    <p>The full manuscript appears as plain text with:</p>
+    <ul class="plain">
+      <li>Vignette labels in brackets: <code>[The Train]</code>, <code>[Root]</code>, etc.</li>
+      <li>Transition markers: <code>~ ~ ~</code></li>
+      <li>ASCII blocks wrapped in backtick fences</li>
+    </ul>
+    <p>You can <strong>copy to clipboard</strong> or <strong>download as a .txt file</strong>.</p>
+  </section>
+
+  <!-- 14. SAVING -->
+  <section id="saving">
+    <h2>14. Saving and data</h2>
+    <p>Signal <strong>auto-saves to your browser's localStorage</strong> as you type (with a short debounce). The status bar shows "saved" when a save completes.</p>
+
+    <p><strong>Important things to know:</strong></p>
+    <ul class="plain">
+      <li>Your data lives in your browser only. It's not synced to a server or to GitHub.</li>
+      <li>Clearing your browser data will erase your manuscript. Export regularly.</li>
+      <li>The data is tied to the specific browser and domain. If you access Signal on a different device or browser, it will start fresh.</li>
+      <li>For backup, use Export to download a .txt file periodically.</li>
+    </ul>
+
+    <div class="tip green">
+      <strong>Recommendation:</strong> Export and download your manuscript at the end of each writing session. Keep those .txt files somewhere safe. Think of Signal as a writing environment, not a filing cabinet.
+    </div>
+  </section>
+
+  <!-- 15. SHORTCUTS -->
+  <section id="shortcuts">
+    <h2>15. All keyboard shortcuts</h2>
+    <p>Press <kbd>Cmd</kbd> + <kbd>/</kbd> inside Signal to see these at any time.</p>
+
+    <table class="shortcut-table">
+      <thead>
+        <tr><th>Action</th><th>Shortcut</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Switch to The Train</td><td><kbd>Cmd</kbd> + <kbd>1</kbd></td></tr>
+        <tr><td>Switch to The Bushwalk</td><td><kbd>Cmd</kbd> + <kbd>2</kbd></td></tr>
+        <tr><td>Switch to Root</td><td><kbd>Cmd</kbd> + <kbd>3</kbd></td></tr>
+        <tr><td>Switch to Paperback</td><td><kbd>Cmd</kbd> + <kbd>4</kbd></td></tr>
+        <tr><td>Switch to The Boxer</td><td><kbd>Cmd</kbd> + <kbd>5</kbd></td></tr>
+        <tr><td>Switch to Vaporwave Bushranger</td><td><kbd>Cmd</kbd> + <kbd>6</kbd></td></tr>
+        <tr><td>New block (same vignette)</td><td><kbd>Cmd</kbd> + <kbd>Enter</kbd></td></tr>
+        <tr><td>Insert empty ASCII block</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd></td></tr>
+        <tr><td>Handover prompt</td><td><kbd>Cmd</kbd> + <kbd>H</kbd></td></tr>
+        <tr><td>Toggle Threads panel</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd></td></tr>
+        <tr><td>Toggle Fragments panel</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></td></tr>
+        <tr><td>Toggle Drift Map panel</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd></td></tr>
+        <tr><td>Export manuscript</td><td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd></td></tr>
+        <tr><td>Show shortcuts</td><td><kbd>Cmd</kbd> + <kbd>/</kbd></td></tr>
+        <tr><td>Close overlay / panel</td><td><kbd>Esc</kbd></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<footer>
+  <a href="signal.html">Open Signal</a> &nbsp;&middot;&nbsp; <a href="index.html">TMAPO Planning</a>
+  <p>Signal Drift Editor &middot; Their Most August Public Organ</p>
+</footer>
+
+</body>
+</html>
